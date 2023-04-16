@@ -1,5 +1,5 @@
 from flask import Flask,jsonify, render_template
-from data import get_data,create_csv,spark
+from main import get_data,create_csv,spark
 import pandas as pd
 import json
 import csv
@@ -13,7 +13,7 @@ def createdataframefromcsv():
     df.show()
     return df
 
-@app.route('/')#the home route displays a menu of all the information to gain
+@app.route('/')
 def home():
      return jsonify({'/show_csv_data' : " SHOW CSV FILE DATA",
                      '/show_api_data' : " SHOW API RETURNED DATA",
@@ -28,7 +28,7 @@ def home():
                      })
 @app.route('/show_csv_data')
 
-def show_all(): #Show all the data from the csv file
+def show_all(): 
     try: #tries to see if the file is available if not returns a "File missing message"
         with open("output.csv") as file:
             reader = csv.reader(file)
@@ -38,7 +38,7 @@ def show_all(): #Show all the data from the csv file
         return  "<h1>:(ERROR)FILE MISSING</h1>"
 
 @app.route('/show_api_data')    
-def show_api_data(): #Function to directly fetch data from the api to display to user
+def show_api_data(): 
     url = "https://covid-19-india2.p.rapidapi.com/details.php"
 
     headers = {
@@ -51,14 +51,14 @@ def show_api_data(): #Function to directly fetch data from the api to display to
     data =response.json()
     return data
 
-@app.route('/mk_csv_df')#Function to get data from the api and create a csv file with data if the file doesn't exist
+@app.route('/mk_csv_df')
 def make_csv():
     json_object=get_data()#api data with last two records gone
     create_csv(json_object)#creating the csv file from the dictionary returned
     return  "<h1>:FILE CREATED</h1>"#return text once file is created
 
 @app.route('/get_most_affected')
-def get_most_affected_state():#function to get the most affected state from the data frame
+def get_most_affected_state():
     if not os.path.exists("output.csv") :
         return  "<h1>:(ERROR)FILE MISSING</h1>"
     else:
@@ -70,7 +70,7 @@ def get_most_affected_state():#function to get the most affected state from the 
 
 
 @app.route('/get_least_affected')
-def get_least_affected_state():#function to get least affected state from the data frame
+def get_least_affected_state():
     
      if not os.path.exists("output.csv") :
         return  "<h1>:(ERROR)FILE MISSING</h1>"
