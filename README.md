@@ -137,7 +137,10 @@ def get_least_affected_state():
         state=sub[0][0]#the same thing as above but ordered in ascending order
         return jsonify({'Least affected state ': state})
 
+```
+<img width="796" alt="Screenshot 2023-04-30 at 11 10 01 PM" src="https://user-images.githubusercontent.com/54627996/235367901-e1361084-ca04-45a5-b492-050c2ac68fd8.png">
 
+```
 @app.route('/highest_covid_cases')
 def highest_covid_cases():
     if not os.path.exists("output.csv") :
@@ -149,8 +152,12 @@ def highest_covid_cases():
         state=sub[0][0] #order in descending by the confirmed covid cases and then return the top record to the variable
         confirmed=sub[0][1]
         return jsonify({'State with highest cases ': state,'Confirmed Covid cases':confirmed})
+```
+
+![Uploading Screenshot 2023-04-30 at 11.10.51 PM.png…]()
 
 
+```
 @app.route('/least_covid_cases')
 def least_covid_cases():
     if not os.path.exists("output.csv") :
@@ -162,7 +169,9 @@ def least_covid_cases():
         state=sub[0][0]#order in ascending by the confirmed covid cases and then return the top record to the variable
         confirmed=sub[0][1]
         return jsonify({'State with the least cases':state,'Confirmed Covid cases':confirmed})
+```
 
+```
 
 @app.route('/total_cases')
 def total_cases():
