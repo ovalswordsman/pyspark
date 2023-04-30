@@ -153,8 +153,9 @@ def highest_covid_cases():
         confirmed=sub[0][1]
         return jsonify({'State with highest cases ': state,'Confirmed Covid cases':confirmed})
 ```
+<img width="694" alt="Screenshot 2023-04-30 at 11 31 59 PM" src="https://user-images.githubusercontent.com/54627996/235368962-847f85ad-9c92-449b-85cf-313a5b788841.png">
 
-![Uploading Screenshot 2023-04-30 at 11.10.51 PM.png…]()
+
 
 
 ```
@@ -171,8 +172,11 @@ def least_covid_cases():
         return jsonify({'State with the least cases':state,'Confirmed Covid cases':confirmed})
 ```
 
-```
 
+<img width="1137" alt="Screenshot 2023-04-30 at 11 23 01 PM" src="https://user-images.githubusercontent.com/54627996/235368618-a24e45e0-0085-46a6-ac1e-2b657a0d8737.png">
+
+
+```
 @app.route('/total_cases')
 def total_cases():
     if not os.path.exists("output.csv") :
@@ -182,7 +186,10 @@ def total_cases():
         df.createOrReplaceTempView("TABLE")
         sub=spark.sql("SELECT SUM(total) AS TOTALCASES FROM TABLE").collect()#SUM function to sum all the numbers under the totalcases field and return that
         return jsonify({'Total cases':sub[0][0]})
+```
+<img width="363" alt="Screenshot 2023-04-30 at 11 35 20 PM" src="https://user-images.githubusercontent.com/54627996/235369094-fded0097-9ebb-4bdc-b797-3256664aad94.png">
 
+```
 @app.route('/handle_well')
 def state_handle_well():
     if not os.path.exists("output.csv") :
@@ -193,6 +200,11 @@ def state_handle_well():
         sub=spark.sql("SELECT STATE , CURED/CONFIRM AS efficiancy from table").orderBy("efficiancy",ascending=False).limit(1).collect()
         return jsonify({'WELL HANDLED STATE':sub[0][0],'Efficiancy':sub[0][1]})
 
+```
+<img width="611" alt="Screenshot 2023-04-30 at 11 46 11 PM" src="https://user-images.githubusercontent.com/54627996/235369554-681903ac-1bee-492b-9c5f-64a33dea556d.png">
+
+
+```
 @app.route('/least_well')
 def state_least_well():
     if not os.path.exists("output.csv") :
@@ -203,3 +215,7 @@ def state_least_well():
         sub=spark.sql("SELECT STATE , CURED/CONFIRM AS efficiancy from table").orderBy("efficiancy",ascending=True).select("state","efficiancy").limit(1).collect()
         return jsonify({'LEAST WELL HANDLED STATE':sub[0][0],'Efficiancy':sub[0][1]})
 ```
+
+<img width="469" alt="Screenshot 2023-04-30 at 11 49 57 PM" src="https://user-images.githubusercontent.com/54627996/235369864-1fcf8852-3cb7-430c-be4e-9b6be70c6c2e.png">
+
+
